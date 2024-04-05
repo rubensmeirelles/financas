@@ -91,6 +91,35 @@ h1 span{
     transition: margin-left 0.2s ease-in-out; /* Adicionando a transição para o movimento */
 }
 
-.content{
+.main-header{
     padding: 10px;
+    background-color: #1a281f;
+    height: 65px;
+    border: 2px solid #ff9f1c;
+}
+
+.text-orange{
+    color: #ff9f1c;
+}
+
+.credit-card{
+    width: 250px !important;
+    height: 100px !important;
+}
+
+.icon-card img{
+    width: 150px;
+    height: 30px;
+}
+
+.bb{
+    background-color: #FAE721;
+}
+
+.nu{
+    background-color: #9526C3;
+}
+
+.po{
+    background-color: #053887;
 }
