@@ -14,3 +14,10 @@ menu.addEventListener('click', function (){
         itemMenu[i].classList.toggle('hidden');
     }
 });
+
+let checkbox = document.querySelector('#gridCheck');
+let qtdParcelas = document.querySelector('.qtdParcelas');
+
+checkbox.addEventListener('click', function() {
+    qtdParcelas.classList.toggle('hidden')
+})

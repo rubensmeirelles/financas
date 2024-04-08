@@ -123,3 +123,7 @@ h1 span{
 .po{
     background-color: #053887;
 }
+
+.hidden{
+    display: none;
+}
