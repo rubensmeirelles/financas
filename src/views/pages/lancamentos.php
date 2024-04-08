@@ -1,4 +1,4 @@
-<?php include_once './includes/header.php'; ?>
+<?php $render('header'); ?>
 
 <div class="content left-250">
     <div class="d-flex align-items-center shadow-lg main-header">
@@ -179,4 +179,4 @@
     </div>
 </div>
 
-<?php include_once './includes/footer.php'; ?>
+<?php $render('footer'); ?>
