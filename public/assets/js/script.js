@@ -16,7 +16,7 @@ menu.addEventListener('click', function (){
 });
 
 let checkbox = document.querySelector('#gridCheck');
-let qtdParcelas = document.querySelector('.qtdParcelas');
+let qtdParcelas = document.querySelector('.parcelas');
 
 checkbox.addEventListener('click', function() {
     qtdParcelas.classList.toggle('hidden')

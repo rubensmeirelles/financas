@@ -33,6 +33,9 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
+                <?php foreach($lancamentos as $l):?>
+                    <li><?=$l['tipo'];?></li>
+                <?php endforeach?>
                 <tr>
                     <th scope="row">1</th>
                     <td>Receita</td>
@@ -115,62 +118,69 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3">
+                <form class="row g-3" method="POST" action="<?=$base;?>/novo">
                     <div class="col-md-3">
-                        <label for="cartao" class="form-label">Tipo lançamento</label>
-                        <select id="cartao" class="form-select">
+                        <label for="tipo" class="form-label">Tipo lançamento</label>
+                        <select id="tipo" class="form-select" name="tipo">
                             <option selected>Selecione o tipo...</option>
-                            <option>Receita</option>
-                            <option>Despesa</option>
+                            <?php foreach ($teste as $t): ?>
+                                <option><?=$t['tipo'];?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label for="cartao" class="form-label">Cartão</label>
-                        <select id="cartao" class="form-select">
-                            <option selected>Selecione o cartão...</option>
-                            <option>Banco do Brasil</option>
-                            <option>Nubank</option>
-                            <option>Porto Seguro</option>
+                        <label for="conta" class="form-label">Cartão</label>
+                        <select id="conta" class="form-select" name="conta">
+                            <option selected value="0">Selecione o cartão...</option>
+                            <option value="Banco do Brasil">Banco do Brasil</option>
+                            <option value="Nubank">Nubank</option>
+                            <option value="Porto Seguro">Porto Seguro</option>
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="dataCompra" class="form-label">Data da compra</label>
-                        <input type="date" class="form-control" id="dataCompra">
+                        <label for="data_lancamento" class="form-label">Data da compra</label>
+                        <input type="date" class="form-control" id="data_lancamento" name="data_lancamento">
                     </div>
                     <div class="col-md-2">
-                        <label for="dataVencimento" class="form-label">Data do vencimento</label>
-                        <input type="date" class="form-control" id="dataVencimento">
+                        <label for="data_vencimento" class="form-label">Data do vencimento</label>
+                        <input type="date" class="form-control" id="data_vencimento" name="data_vencimento">
                     </div>
                     <div class="col-md-2">
                         <label for="valor" class="form-label">Valor</label>
-                        <input type="text" class="form-control" id="valor" placeholder="Valor">
+                        <input type="text" class="form-control" id="valor" placeholder="Valor" name="valor">
                     </div>
                     <div class="col-md-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <input class="form-check-input" type="checkbox" id="gridCheck" name="parcelado">
                             <label class="form-check-label" for="gridCheck">
                                 Compra parcelada
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-3 hidden qtdParcelas">
-                        <label for="qtdParcelas" class="form-label">Quantidade de parcelas</label>
-                        <input type="text" class="form-control" id="qtdParcelas" placeholder="Quantidade de parcelas">
+                    <div class="col-md-3 hidden parcelas">
+                        <label for="parcelas" class="form-label">Quantidade de parcelas</label>
+                        <input type="text" class="form-control" id="parcelas" placeholder="Quantidade de parcelas" name="parcelas">
                     </div>
                     <div class="row g-3">
                         <div class="col-md-8">
                             <label for="descricao" class="form-label">Descrição do lançamento</label>
-                            <input type="text" class="form-control" id="descricao" placeholder="Descrição do lançamento">
+                            <input type="text" class="form-control" id="descricao" placeholder="Descrição do lançamento" name="descricao">
                         </div>
                         <div class="col-md-4">
-                            <label for="categoria" class="form-label">Categoria</label>
-                            <input type="text" class="form-control" id="categoria" placeholder="Categoria">
+                            <label for="categoria_id" class="form-label">Categoria</label>
+                            <select id="categoria_id" class="form-select" name="categoria_id">
+                                <option selected value="0">Selecione a categoria...</option>
+                                <?php foreach($categorias as $c):?>
+                                    <option value="<?=$c['tipo_id'];?>"><?=$c['nome_categoria'];?></option>
+                                <?php endforeach; ?>
+                             
+                            </select>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="button" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </div>
                 </form>

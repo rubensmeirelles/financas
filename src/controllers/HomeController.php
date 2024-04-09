@@ -9,8 +9,4 @@ class HomeController extends Controller {
         $this->render('home');
     }
 
-    public function lancamentos() {
-        $this->render('lancamentos');
-    }
-
 }
