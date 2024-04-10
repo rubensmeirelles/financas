@@ -10,16 +10,16 @@ class LancamentosController extends Controller {
 
     public function index() {
         $tipos = Tipo::select()->execute();
-        $categorias = Categoria::select()->execute();
-        $l->table('lancamentos as l')
-            ->select(['l.tipo', 'l.conta', 'l.descricao', 'c.nome_categoria'])
-            ->join('categorias as c','c.id', '=', 'l.categoria_id')
+        $categorias = Categoria::select()->get();
+        $lancamentos = Lancamento::select(['lancamentos.tipo', 'lancamentos.conta', 'lancamentos.descricao', 'categorias.nome_categoria'])
+            ->join('categorias','categoria.id', '=', 'lancamentos.categoria_id')
             ->get();
         $this->render('lancamentos', [
             'tipos' => $tipos,
             'categorias' => $categorias,
-            'lancamentos' => $l
+            'lancamentos' => $lancamentos
         ]);        
+        print_r($lancamentos);
     }
 
     public function novo() {
