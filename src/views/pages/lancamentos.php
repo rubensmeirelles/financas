@@ -15,6 +15,9 @@
     <!-- Lançamentos -->
 
     <div class="p-3">
+        <?php foreach($lancamentos as $l):?>
+            <li><?=$l['id']?></li>
+        <?php endforeach?>
         <table class="table">
             <thead>
                 <tr>
@@ -33,7 +36,11 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
+<<<<<<< HEAD
             <?php foreach($lancamentos as $l):?>                
+=======
+                
+>>>>>>> 0ae16716cdb476c972964e6e2e8856807cd52f51
                 <tr>
                     <th scope="row"><?=$l['id']?></th>
                     <td><?=$l['tipo']?></td>
@@ -119,7 +126,11 @@
                             <select id="categoria" class="form-select" name="categoria">
                                 <option selected value="0">Selecione a categoria...</option>
                                 <?php foreach($categorias as $c):?>
+<<<<<<< HEAD
                                     <option value="<?=$c['nome_categoria'];?>"><?=$c['nome_categoria'];?></option>
+=======
+                                    <option value="<?=$c['id'];?>"><?=$c['nome_categoria'];?></option>
+>>>>>>> 0ae16716cdb476c972964e6e2e8856807cd52f51
                                 <?php endforeach; ?>
                              
                             </select>
