@@ -2,6 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
+use \core\Model;
 use \src\models\Lancamento;
 use \src\models\Categoria;
 use \src\models\Tipo;
@@ -11,15 +12,14 @@ class LancamentosController extends Controller {
     public function index() {
         $tipos = Tipo::select()->execute();
         $categorias = Categoria::select()->execute();
-        $l->table('lancamentos as l')
-            ->select(['l.tipo', 'l.conta', 'l.descricao', 'c.nome_categoria'])
-            ->join('categorias as c','c.id', '=', 'l.categoria_id')
-            ->get();
+        $lancamentos = Lancamento::select()->get();
+
         $this->render('lancamentos', [
             'tipos' => $tipos,
             'categorias' => $categorias,
-            'lancamentos' => $l
-        ]);        
+            'lancamentos' => $lancamentos
+        ]);   
+        //  print_r($totalDespesas);     
     }
 
     public function novo() {
@@ -29,7 +29,7 @@ class LancamentosController extends Controller {
         $data_vencimento = filter_input(INPUT_POST, 'data_vencimento');
         $valor = filter_input(INPUT_POST, 'valor');
         $descricao = filter_input(INPUT_POST, 'descricao');
-        $categoria_id = filter_input(INPUT_POST, 'categoria_id');
+        $categoria = filter_input(INPUT_POST, 'categoria');
         $parcelas = filter_input(INPUT_POST, 'parcelas');        
 
         if($tipo) {
@@ -40,7 +40,7 @@ class LancamentosController extends Controller {
                 'data_vencimento' => $data_vencimento,
                 'valor' => $valor,
                 'descricao' => $descricao,
-                'categoria_id' => $categoria_id,
+                'categoria' => $categoria,
                 'parcelas' => $parcelas,
 
                 
