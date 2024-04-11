@@ -13,6 +13,11 @@
     <!-- Lançamentos -->
 
     <div class="p-3">
+        <?php 
+            $selectAllLancamentos = "SELECT * FROM lancamentos";
+            $lancamentos = mysqli_query($conn, $selectAllLancamentos);
+            if(($lancamentos) and ($lancamentos->num_rows != 0)) {
+        ?>
         <table class="table">
             <thead>
                 <tr>
@@ -31,26 +36,28 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-            <?php foreach($lancamentos as $l):?>                
-                <tr>
-                    <th scope="row"><?=$l['id']?></th>
-                    <td><?=$l['tipo']?></td>
-                    <td><?=$l['conta']?></td>
-                    <td><?=$l['data_lancamento']?></td>
-                    <td><?=$l['data_vencimento']?></td>
-                    <td><?=$l['valor']?></td>
-                    <td><?=$l['descricao']?></td>
-                    <td><?=$l['categoria']?></td>
-                    <td><?= date("M", strtotime($l['data_vencimento'])) ?></td>
-                    <td>2024</td>
-                    <td><?=$l['parcelas']?></td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Editar</button>
-                        <button type="button" class="btn btn-danger">Excluir</button>
-                    </td>
-                </tr>
-            <?php endforeach?>
+                <?php foreach ($lancamentos as $result) : ?>
+                    <?php extract($result); ?>
+                    <tr>
+                        <td scope='row'><?php echo $id; ?></td>
+                        <td scope='row'><?php echo $tipo; ?></td>
+                        <td scope='row'><?php echo $conta; ?></td>
+                        <td scope='row'><?php echo $data_lancamento; ?></td>
+                        <td scope='row'><?php echo $data_vencimento; ?></td>
+                        <td scope='row'><?php echo $valor; ?></td>
+                        <td scope='row'><?php echo $descricao; ?></td>
+                        <td scope='row'><?php echo $categoria; ?></td>
+                        <td scope='row'><?php echo date('M', strtotime($data_vencimento)); ?></td>
+                        <td scope='row'><?php echo $descricao; ?></td>
+                        <td scope='row'><?php echo $parcelas; ?></td>
+                        <td>
+                            <button type='button' class='btn btn-primary'>Editar</button>
+                            <button type='button' class='btn btn-danger'>Excluir</button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
+            <?php }?>
         </table>
     </div>
 </div>

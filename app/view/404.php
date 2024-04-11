@@ -8,6 +8,5 @@
             ?>
         </h4> 
         <a href="home">Página inicial</a>
-    </div>
-        
+    </div>        
 </div>

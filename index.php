@@ -1,6 +1,7 @@
 <?php include_once '../financas/app/includes/header.php';
 
 include_once "../financas/app/config/config.php";
+include_once "../financas/app/config/connection.php";
 
 $url = filter_input(INPUT_GET, 'url', FILTER_DEFAULT);
 
