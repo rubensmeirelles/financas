@@ -47,7 +47,7 @@
                         <td scope='row'><?php echo $valor; ?></td>
                         <td scope='row'><?php echo $descricao; ?></td>
                         <td scope='row'><?php echo $categoria; ?></td>
-                        <td scope='row'><?php echo $mes_abreviado = date('M', strtotime($data_vencimento)); ?></td>
+                        <td scope='row'><?php echo date('M', strtotime($data_vencimento)); ?></td>
                         <td scope='row'><?php echo date('Y', strtotime($data_vencimento)); ?></td>
                         <td scope='row'><?php echo $parcelas; ?></td>
                         <td>
