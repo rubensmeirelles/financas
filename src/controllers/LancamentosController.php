@@ -2,7 +2,6 @@
 namespace src\controllers;
 
 use \core\Controller;
-use \core\Model;
 use \src\models\Lancamento;
 use \src\models\Categoria;
 use \src\models\Tipo;
@@ -11,27 +10,14 @@ class LancamentosController extends Controller {
 
     public function index() {
         $tipos = Tipo::select()->execute();
-<<<<<<< HEAD
         $categorias = Categoria::select()->execute();
         $lancamentos = Lancamento::select()->get();
 
-=======
-        $categorias = Categoria::select()->get();
-        $lancamentos = Lancamento::select(['lancamentos.tipo', 'lancamentos.conta', 'lancamentos.descricao', 'categorias.nome_categoria'])
-            ->join('categorias','categoria.id', '=', 'lancamentos.categoria_id')
-            ->get();
->>>>>>> 0ae16716cdb476c972964e6e2e8856807cd52f51
         $this->render('lancamentos', [
             'tipos' => $tipos,
             'categorias' => $categorias,
             'lancamentos' => $lancamentos
-<<<<<<< HEAD
-        ]);   
-        //  print_r($totalDespesas);     
-=======
-        ]);        
-        print_r($lancamentos);
->>>>>>> 0ae16716cdb476c972964e6e2e8856807cd52f51
+        ]);       
     }
 
     public function novo() {
