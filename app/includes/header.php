@@ -19,10 +19,10 @@
         <div class="divider"></div>
         <div class="mt-2">
             <ul class="menu-item p-2">
-                <a href="index.php" class="text-decoration-none menu-list active">
+                <a href="home" class="text-decoration-none menu-list active">
                     <li class="text-black fw-bolder"><i class="fas fa-tachometer-alt fa-rotate-by fa-lg mx-2 icon-color" style="--fa-rotate-angle: 91deg;"></i><span class="item-menu">Dashboard</span></li>
                 </a>   
-                <a href="lancamentos.php" class="text-decoration-none menu-list">
+                <a href="lancamentos" class="text-decoration-none menu-list">
                     <li class="text-black fw-bolder"><i class="fas fa-wallet fa-rotate-by fa-lg mx-2 icon-color" style="--fa-rotate-angle: 91deg;"></i><span class="item-menu">Lançamentos</span></li>
                 </a>              
             </ul>
