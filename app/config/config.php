@@ -2,7 +2,7 @@
 //EXIBIR MENSAGEM DE ALERTA DE ERRO EM TELA
 ini_set('display_errors', true);
 
-// date_default_timezone_get('America/Sao Paulo');
+date_default_timezone_set('America/Sao_Paulo');
 
 //CONSTANTES GLOBAIS
 //CONSTANTES COM O ENDEREÇO DA APLICAÇÃO

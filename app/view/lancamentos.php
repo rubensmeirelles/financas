@@ -42,13 +42,13 @@
                         <td scope='row'><?php echo $id; ?></td>
                         <td scope='row'><?php echo $tipo; ?></td>
                         <td scope='row'><?php echo $conta; ?></td>
-                        <td scope='row'><?php echo $data_lancamento; ?></td>
-                        <td scope='row'><?php echo $data_vencimento; ?></td>
+                        <td scope='row'><?php echo date("d/m/Y", strtotime($data_lancamento)); ?></td>
+                        <td scope='row'><?php echo date("d/m/Y", strtotime($data_vencimento)); ?></td>
                         <td scope='row'><?php echo $valor; ?></td>
                         <td scope='row'><?php echo $descricao; ?></td>
                         <td scope='row'><?php echo $categoria; ?></td>
-                        <td scope='row'><?php echo date('M', strtotime($data_vencimento)); ?></td>
-                        <td scope='row'><?php echo $descricao; ?></td>
+                        <td scope='row'><?php echo $mes_abreviado = date('M', strtotime($data_vencimento)); ?></td>
+                        <td scope='row'><?php echo date('Y', strtotime($data_vencimento)); ?></td>
                         <td scope='row'><?php echo $parcelas; ?></td>
                         <td>
                             <button type='button' class='btn btn-primary'>Editar</button>
