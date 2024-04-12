@@ -71,16 +71,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3" method="POST" action="<?=$base;?>/novo">
+                <!-- CADASTRA NO BANCO DE DADOS -->
+                <?php
+                    //BUSCAR O TIPO NO BANCO DE DADOS
+                    $tipos = "SELECT * FROM tipos";
+                    $resultTipos = mysqli_query($conn, $tipos);
+                    if(($resultTipos) and ($resultTipos->num_rows != 0)) {
+                ?>
+                <form class="row g-3" method="POST" action="">
+                    <?php
+                        $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                        if(!empty($data['salvarLancamento'])){
+                            var_dump($data);
+
+                        }
+                    ?>
                     <div class="col-md-3">
                         <label for="tipo" class="form-label">Tipo lançamento</label>
                         <select id="tipo" class="form-select" name="tipo">
                             <option selected>Selecione o tipo...</option>
-                            <?php foreach ($tipos as $t): ?>
-                                <option><?=$t['tipo'];?></option>
+                            <?php foreach ($resultTipos as $res) : ?>
+                                <?php extract($res); ?>
+                                <option value="<?=$tipo;?>"><?=$tipo;?></option>
                             <?php endforeach; ?>
+                            <?php }?>
                         </select>
                     </div>
+                    
                     <div class="col-md-3">
                         <label for="conta" class="form-label">Cartão</label>
                         <select id="conta" class="form-select" name="conta">
@@ -120,20 +137,27 @@
                             <input type="text" class="form-control" id="descricao" placeholder="Descrição do lançamento" name="descricao">
                         </div>
                         <div class="col-md-4">
+                            <?php
+                                //BUSCAR AS CATEGORIAS NO BANCO DE DADOS
+                                $categorias = "SELECT * FROM categorias";
+                                $resultcategorias = mysqli_query($conn, $categorias);
+                                if(($resultcategorias) and ($resultcategorias->num_rows != 0)) {
+                            ?>
                             <label for="categoria" class="form-label">Categoria</label>
                             <select id="categoria" class="form-select" name="categoria">
                                 <option selected value="0">Selecione a categoria...</option>
-                                <?php foreach($categorias as $c):?>
-                                    <option value="<?=$c['nome_categoria'];?>"><?=$c['nome_categoria'];?></option>
+                                <?php foreach ($resultcategorias as $c) : ?>
+                                    <?php extract($c); ?>
+                                    <option value="<?=$nome_categoria;?>"><?=$nome_categoria;?></option>
                                 <?php endforeach; ?>
-                             
+                             <?php };?>
                             </select>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary" name="salvarLancamento">Salvar</button>
                         </div>
                     </div>
                 </form>
