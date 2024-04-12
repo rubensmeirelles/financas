@@ -18,6 +18,13 @@
             $lancamentos = mysqli_query($conn, $selectAllLancamentos);
             if(($lancamentos) and ($lancamentos->num_rows != 0)) {
         ?>
+        <?php
+            $msg = "";
+            if(!empty($msg)){
+                echo $msg;
+                unset($msg);
+            }
+        ;?>
         <table class="table">
             <thead>
                 <tr>
@@ -82,7 +89,25 @@
                     <?php
                         $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                         if(!empty($data['salvarLancamento'])){
-                            var_dump($data);
+                            //EVITAR SQL INJECTION
+                            $tipo = mysqli_real_escape_string($conn, $data['tipo']);
+                            $conta = mysqli_real_escape_string($conn, $data['conta']);
+                            $data_lancamento = mysqli_real_escape_string($conn, $data['data_lancamento']);
+                            $data_vencimento = mysqli_real_escape_string($conn, $data['data_vencimento']);
+                            $valor = mysqli_real_escape_string($conn, $data['valor']);
+                            $parcelas = mysqli_real_escape_string($conn, $data['parcelas']);
+                            $descricao = mysqli_real_escape_string($conn, $data['descricao']);
+                            $categoria = mysqli_real_escape_string($conn, $data['categoria']);
+
+                            $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, parcelas, descricao, categoria) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$parcelas', '$descricao', '$categoria')"; 
+                            mysqli_query($conn, $queryLancamento);
+
+                            if(mysqli_insert_id($conn)){
+                                $msg = "<p class='alert alert-success'>Cadastro realizado com sucesso!</p>";
+                            } else {
+                                $msg = "<p class='alert alert-danger'>Erro ao cadastrar :(</p>";
+                            }
+                            // var_dump($data);
 
                         }
                     ?>
