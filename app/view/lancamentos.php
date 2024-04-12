@@ -12,19 +12,25 @@
 
     <!-- Lançamentos -->
 
+  
+    <div class="p-3" style="width:450px">
+        <?php
+            session_start();
+            if(isset($_SESSION['msg'])){
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            }
+        ?>
+    </div>
+
     <div class="p-3">
         <?php 
+        $msg = "";
             $selectAllLancamentos = "SELECT * FROM lancamentos";
             $lancamentos = mysqli_query($conn, $selectAllLancamentos);
             if(($lancamentos) and ($lancamentos->num_rows != 0)) {
         ?>
-        <?php
-            $msg = "";
-            if(!empty($msg)){
-                echo $msg;
-                unset($msg);
-            }
-        ;?>
+
         <table class="table">
             <thead>
                 <tr>
@@ -36,8 +42,6 @@
                     <th scope="col">Valor</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Categoria</th>
-                    <th scope="col">Mês Vencimento</th>
-                    <th scope="col">Ano Vencimento</th>
                     <th scope="col">Parcela</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -54,8 +58,6 @@
                         <td scope='row'><?php echo $valor; ?></td>
                         <td scope='row'><?php echo $descricao; ?></td>
                         <td scope='row'><?php echo $categoria; ?></td>
-                        <td scope='row'><?php echo date('M', strtotime($data_vencimento)); ?></td>
-                        <td scope='row'><?php echo date('Y', strtotime($data_vencimento)); ?></td>
                         <td scope='row'><?php echo $parcelas; ?></td>
                         <td>
                             <button type='button' class='btn btn-primary'>Editar</button>
@@ -80,37 +82,50 @@
             <div class="modal-body">
                 <!-- CADASTRA NO BANCO DE DADOS -->
                 <?php
+                    //RECEBER OS DADOS DO FORMULÁRIO
+                    
+                    $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                    if(!empty($data['salvarLancamento'])){
+                        var_dump($data);
+                        // EVITAR SQL INJECTION
+                        $tipo = mysqli_real_escape_string($conn, $data['tipo']);
+                        $conta = mysqli_real_escape_string($conn, $data['conta']);
+                        $data_lancamento = mysqli_real_escape_string($conn, $data['data_lancamento']);
+                        $data_vencimento = mysqli_real_escape_string($conn, $data['data_vencimento']);
+                        $valor = mysqli_real_escape_string($conn, $data['valor']);
+                        $descricao = mysqli_real_escape_string($conn, $data['descricao']);
+                        $categoria = mysqli_real_escape_string($conn, $data['categoria']);
+                        $parcelas = mysqli_real_escape_string($conn, $data['parcelas']);                            
+
+                        $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$descricao', '$categoria', '$parcelas')"; 
+
+                        mysqli_query($conn, $queryLancamento);
+
+                        if(mysqli_insert_id($conn)){
+                            $_SESSION['msg'] = "<div class='alert alert-success d-flex align-items-center alert-dismissible fade show' role='alert'>
+                            Cadastro realizado com sucesso!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                            $url_redirect = URL ."/lancamentos";
+                            header("Location: $url_redirect");
+                        } else {
+                            $_SESSION['msg'] = "<div class='alert alert-danger d-flex align-items-center alert-dismissible fade show' role='alert'>
+                            Erro ao cadastrar :(
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                            $url_redirect = URL ."/lancamentos";
+                            header("Location: $url_redirect");
+                        }
+                    }
+                ?>
+                <?php
                     //BUSCAR O TIPO NO BANCO DE DADOS
                     $tipos = "SELECT * FROM tipos";
                     $resultTipos = mysqli_query($conn, $tipos);
                     if(($resultTipos) and ($resultTipos->num_rows != 0)) {
                 ?>
+
                 <form class="row g-3" method="POST" action="">
-                    <?php
-                        $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-                        if(!empty($data['salvarLancamento'])){
-                            //EVITAR SQL INJECTION
-                            $tipo = mysqli_real_escape_string($conn, $data['tipo']);
-                            $conta = mysqli_real_escape_string($conn, $data['conta']);
-                            $data_lancamento = mysqli_real_escape_string($conn, $data['data_lancamento']);
-                            $data_vencimento = mysqli_real_escape_string($conn, $data['data_vencimento']);
-                            $valor = mysqli_real_escape_string($conn, $data['valor']);
-                            $parcelas = mysqli_real_escape_string($conn, $data['parcelas']);
-                            $descricao = mysqli_real_escape_string($conn, $data['descricao']);
-                            $categoria = mysqli_real_escape_string($conn, $data['categoria']);
-
-                            $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, parcelas, descricao, categoria) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$parcelas', '$descricao', '$categoria')"; 
-                            mysqli_query($conn, $queryLancamento);
-
-                            if(mysqli_insert_id($conn)){
-                                $msg = "<p class='alert alert-success'>Cadastro realizado com sucesso!</p>";
-                            } else {
-                                $msg = "<p class='alert alert-danger'>Erro ao cadastrar :(</p>";
-                            }
-                            // var_dump($data);
-
-                        }
-                    ?>
                     <div class="col-md-3">
                         <label for="tipo" class="form-label">Tipo lançamento</label>
                         <select id="tipo" class="form-select" name="tipo">
@@ -182,7 +197,7 @@
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-primary" name="salvarLancamento">Salvar</button>
+                            <input type="submit" class="btn btn-primary" name="salvarLancamento" value="Salvar">
                         </div>
                     </div>
                 </form>

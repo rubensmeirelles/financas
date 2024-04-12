@@ -1,5 +1,8 @@
 <?php
 //EXIBIR MENSAGEM DE ALERTA DE ERRO EM TELA
+
+ob_start();
+
 ini_set('display_errors', true);
 
 date_default_timezone_set('America/Sao_Paulo');
