@@ -7,6 +7,18 @@
     </div>
 
     <?php
+        //TOTL DE RECEITAS
+        $listarReceitas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Receita' LIMIT 1";
+        $resultListarReceitas = mysqli_query($conn, $listarReceitas);
+        $totalReceitas = mysqli_fetch_assoc($resultListarReceitas);
+        extract($totalReceitas);
+
+        //TOTL DE DESPESAS
+        $listarDespesas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' LIMIT 1";
+        $resultListarDespesas = mysqli_query($conn, $listarDespesas);
+        $totalDespesas = mysqli_fetch_assoc($resultListarDespesas);
+        extract($totalDespesas);
+
         //DESPESAS CARTÃO BB
         $listarDespesasBB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Banco do Brasil' LIMIT 1";
         $resultListarDespesas = mysqli_query($conn, $listarDespesasBB);
@@ -24,12 +36,40 @@
         $resultListarDespesas = mysqli_query($conn, $listarDespesasPS);
         $totalDespesasPS = mysqli_fetch_assoc($resultListarDespesas);
         extract($totalDespesasPS);
+
+        //SALDO
+        $saldo = ($totalReceitas['valor'] - $totalDespesas['valor']);
     ;?>
 
-    <h1 class="p-2 fw-bold">Resumo das despesas</h1>
-    <hr>
+    <div class="d-flex p-2">
+        <div>
+            <table class="table table-dark border" style="width: 500px">
+                <thead>
+                    <tr><span class="fw-bold">Resumo das despesas e receitas</span></tr>                
+                </thead>
+                <tr>
+                    <td class="text-success">Receitas</td>
+                    <td class="text-success border-end">
+                        R$ <?php echo number_format($totalReceitas['valor'], 2, ',', '.');?>
+                    </td>
+                    <td rowspan="2" style="vertical-align : middle;text-align:center;" class="text-info">Saldo</td>
+                    <td rowspan="2" style="vertical-align : middle;text-align:center;" class="text-info">
+                        R$ <?php echo number_format($saldo, 2, ',', '.');?>
+                    </td>
+                </tr>
+                <tr>                
+                    <td class="text-danger">Despesas</td>
+                    <td class="text-danger border-end">R$ <?php echo number_format($totalDespesas['valor'], 2, ',', '.');?></td>
+                </tr>            
+            </table>
+        </div>
+        <div class="mx-2">
+            <span class="fw-bold">Filtros</span>
+        </div>
+        <hr>
+    </div>
 
-    <div class="d-flex justify-content-around align-items-center mt-5 dashboard">
+    <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
         <div class="card shadow d-flex credit-card">
             <div class="card-body d-flex justify-content-around align-items-center text-black bb">
                 <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
