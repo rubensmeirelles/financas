@@ -1,3 +1,17 @@
+<?php 
+    require_once '../financas/app/functions/functions.php';
+
+    $table = 'lancamentos';
+    $tipo = "Receita";
+    $receitas = buscarReceitas($conn, $table, $tipo);
+
+    $table = 'lancamentos';
+    $tipo = "Despesa";
+    $despesas = buscarDespesas($conn, $table, $tipo);
+
+    $saldo = calcularSaldo($conn, 'lancamentos', 'Receita', 'Despesa');
+    
+?>
 <div class="content left-250">
     <div class="d-flex align-items-center shadow-lg main-header">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
@@ -6,12 +20,39 @@
         </svg>
         <span class="text-orange px-1">Lançamentos</h3>
     </div>
-    <div class="p-3">
-        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
-    </div>
-
+    
     <!-- Lançamentos -->
 
+    <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
+        <div class="card shadow d-flex credit-card">
+            <div class="card-body d-flex justify-content-around align-items-center text-light bg-success">
+                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                    <span>Receitas</span>
+                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($receitas['valor'], 2, ',', '.');?></span>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow d-flex credit-card">
+            <div class="card-body d-flex justify-content-around align-items-center text-light bg-danger">
+                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                    <span>Despesas</span>
+                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($despesas['valor'], 2, ',', '.');?></span>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow d-flex credit-card">
+            <div class="card-body d-flex justify-content-around align-items-center text-light bg-info">
+                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                    <span>Saldo</span>
+                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($saldo, 2, ',', '.');?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 p-3">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
+    </div>
   
     <div class="p-3" style="width:450px">
         <?php

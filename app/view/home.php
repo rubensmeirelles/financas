@@ -1,3 +1,18 @@
+<?php 
+    require_once '../financas/app/functions/functions.php';
+
+    $table = 'lancamentos';
+    $tipo = "Receita";
+    $receitas = buscarReceitas($conn, $table, $tipo);
+
+    $table = 'lancamentos';
+    $tipo = "Despesa";
+    $despesas = buscarDespesas($conn, $table, $tipo);
+
+    $saldo = calcularSaldo($conn, 'lancamentos', 'Receita', 'Despesa');
+    
+?>
+
 <div class="content left-250">
     <div class="d-flex align-items-center shadow-lg main-header">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
@@ -8,16 +23,16 @@
 
     <?php
         //TOTL DE RECEITAS
-        $listarReceitas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Receita' LIMIT 1";
-        $resultListarReceitas = mysqli_query($conn, $listarReceitas);
-        $totalReceitas = mysqli_fetch_assoc($resultListarReceitas);
-        extract($totalReceitas);
+        // $listarReceitas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Receita' LIMIT 1";
+        // $resultListarReceitas = mysqli_query($conn, $listarReceitas);
+        // $totalReceitas = mysqli_fetch_assoc($resultListarReceitas);
+        // extract($totalReceitas);
 
         //TOTL DE DESPESAS
-        $listarDespesas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' LIMIT 1";
-        $resultListarDespesas = mysqli_query($conn, $listarDespesas);
-        $totalDespesas = mysqli_fetch_assoc($resultListarDespesas);
-        extract($totalDespesas);
+        // $listarDespesas = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' LIMIT 1";
+        // $resultListarDespesas = mysqli_query($conn, $listarDespesas);
+        // $totalDespesas = mysqli_fetch_assoc($resultListarDespesas);
+        // extract($totalDespesas);
 
         //DESPESAS CARTÃO BB
         $listarDespesasBB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Banco do Brasil' LIMIT 1";
@@ -38,7 +53,7 @@
         extract($totalDespesasPS);
 
         //SALDO
-        $saldo = ($totalReceitas['valor'] - $totalDespesas['valor']);
+        // $saldo = ($totalReceitas['valor'] - $totalDespesas['valor']);
     ;?>
 
     <div class="d-flex p-2">
@@ -50,7 +65,7 @@
                 <tr>
                     <td class="text-success">Receitas</td>
                     <td class="text-success border-end">
-                        R$ <?php echo number_format($totalReceitas['valor'], 2, ',', '.');?>
+                        R$ <?php echo number_format($receitas['valor'], 2, ',', '.');?>
                     </td>
                     <td rowspan="2" style="vertical-align : middle;text-align:center;" class="text-info">Saldo</td>
                     <td rowspan="2" style="vertical-align : middle;text-align:center;" class="text-info">
@@ -59,7 +74,7 @@
                 </tr>
                 <tr>                
                     <td class="text-danger">Despesas</td>
-                    <td class="text-danger border-end">R$ <?php echo number_format($totalDespesas['valor'], 2, ',', '.');?></td>
+                    <td class="text-danger border-end">R$ <?php echo number_format($despesas['valor'], 2, ',', '.');?></td>
                 </tr>            
             </table>
         </div>
