@@ -1,27 +1,33 @@
 <?php 
 include_once "../financas/app/config/config.php";
 
-function buscarReceitas($conn, $table, $tipo){
+function buscarLancamentos($conn, $table, $where = "", $order = ""){
+    if (!empty($order)) {
+        $order = "ORDER BY $order";
+    }
+    if (!empty($where)) {
+        $where = $where;
+    }
+    $queryLancamentos = "SELECT * FROM $table WHERE $where $order";
+    $executeLancamentos = mysqli_query($conn, $queryLancamentos);
+    $resultLancamentos = mysqli_fetch_all($executeLancamentos, MYSQLI_ASSOC);
+    return $resultLancamentos;
+}
+
+function buscarReceitasDespesas($conn, $table, $tipo){
     $queryReceitas = "SELECT SUM(valor) AS valor FROM $table WHERE tipo = '$tipo'";
     $executeReceitas = mysqli_query($conn, $queryReceitas);
     $resultReceitas = mysqli_fetch_assoc($executeReceitas);
     return $resultReceitas;
 }
 
-function buscarDespesas($conn, $table, $tipo){
-    $queryDespesas = "SELECT SUM(valor) AS valor FROM $table WHERE tipo = '$tipo'";
-    $executeDespesas = mysqli_query($conn, $queryDespesas);
-    $resultDespesas = mysqli_fetch_assoc($executeDespesas);
-    return $resultDespesas;
-}
-
 function calcularSaldo($conn, $table, $tipoReceita, $tipoDespesa) {
     // Busca o total de receitas
-    $receitas = buscarReceitas($conn, $table, $tipoReceita);
+    $receitas = buscarReceitasDespesas($conn, $table, $tipoReceita);
     $totalReceitas = $receitas['valor'];
 
     // Busca o total de despesas
-    $despesas = buscarDespesas($conn, $table, $tipoDespesa);
+    $despesas = buscarReceitasDespesas($conn, $table, $tipoDespesa);
     $totalDespesas = $despesas['valor'];
 
     // Calcula o saldo

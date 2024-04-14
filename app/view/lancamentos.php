@@ -1,15 +1,23 @@
 <?php 
     require_once '../financas/app/functions/functions.php';
-
+    //TOTAL DE RECEITAS
     $table = 'lancamentos';
     $tipo = "Receita";
-    $receitas = buscarReceitas($conn, $table, $tipo);
+    $receitas = buscarReceitasDespesas($conn, $table, $tipo);
 
+    //TOTAL DE DESPESDAS
     $table = 'lancamentos';
     $tipo = "Despesa";
-    $despesas = buscarDespesas($conn, $table, $tipo);
+    $despesas = buscarReceitasDespesas($conn, $table, $tipo);
 
+    //SALDO
     $saldo = calcularSaldo($conn, 'lancamentos', 'Receita', 'Despesa');
+
+    //TOTAL DE LANÇAMENTOS
+    $table = 'lancamentos';
+    $where = 1;
+    $order = "data_lancamento DESC";
+    $lancamentos = buscarLancamentos($conn, $table, $where, $order);
     
 ?>
 <div class="content left-250">
@@ -20,7 +28,7 @@
         </svg>
         <span class="text-orange px-1">Lançamentos</h3>
     </div>
-    
+
     <!-- Lançamentos -->
 
     <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
@@ -66,10 +74,7 @@
 
     <div class="p-3">
         <?php 
-        $msg = "";
-            $selectAllLancamentos = "SELECT * FROM lancamentos";
-            $lancamentos = mysqli_query($conn, $selectAllLancamentos);
-            if(($lancamentos) and ($lancamentos->num_rows != 0)) {
+            $msg = "";
         ?>
 
         <table class="table">
@@ -107,7 +112,6 @@
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-            <?php }?>
         </table>
     </div>
 </div>

@@ -3,11 +3,11 @@
 
     $table = 'lancamentos';
     $tipo = "Receita";
-    $receitas = buscarReceitas($conn, $table, $tipo);
+    $receitas = buscarReceitasDespesas($conn, $table, $tipo);
 
     $table = 'lancamentos';
     $tipo = "Despesa";
-    $despesas = buscarDespesas($conn, $table, $tipo);
+    $despesas = buscarReceitasDespesas($conn, $table, $tipo);
 
     $saldo = calcularSaldo($conn, 'lancamentos', 'Receita', 'Despesa');
     
