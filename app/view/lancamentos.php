@@ -32,7 +32,11 @@
     
         <!-- Lançamentos -->
     
-        <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
+        <div class="d-flex justify-content-around align-items-center mt-3">
+            <div>
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
+            </div>
+            
             <div class="card shadow d-flex credit-card">
                 <div class="card-body d-flex justify-content-around align-items-center text-light bg-success">
                     <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
@@ -59,9 +63,9 @@
             </div>
         </div>
     
-        <div class="mt-5 p-3">
+        <!-- <div class="mt-5 p-3">
             <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
-        </div>
+        </div> -->
       
         <div class="p-3" style="width:450px">
             <?php
@@ -78,7 +82,7 @@
                 $msg = "";
             ?>
     
-            <table class="table">
+            <table id="example" class="display table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

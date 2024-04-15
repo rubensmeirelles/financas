@@ -21,3 +21,12 @@ let qtdParcelas = document.querySelector('.parcelas');
 checkbox.addEventListener('click', function() {
     qtdParcelas.classList.toggle('hidden')
 })
+
+// new DataTable('#example');
+var table = new DataTable('#example', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
+    },
+});
+
+
