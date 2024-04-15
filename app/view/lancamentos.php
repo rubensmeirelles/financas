@@ -20,99 +20,101 @@
     $lancamentos = buscarLancamentos($conn, $table, $where, $order);
     
 ?>
-<div class="content left-250">
-    <div class="d-flex align-items-center shadow-lg main-header">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
-            <path d="M14 9h8v6h-8z"></path>
-            <path d="M20 3H5C3.346 3 2 4.346 2 6v12c0 1.654 1.346 3 3 3h15c1.103 0 2-.897 2-2v-2h-8c-1.103 0-2-.897-2-2V9c0-1.103.897-2 2-2h8V5c0-1.103-.897-2-2-2z"></path>
-        </svg>
-        <span class="text-orange px-1">Lançamentos</h3>
-    </div>
-
-    <!-- Lançamentos -->
-
-    <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
-        <div class="card shadow d-flex credit-card">
-            <div class="card-body d-flex justify-content-around align-items-center text-light bg-success">
-                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
-                    <span>Receitas</span>
-                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($receitas['valor'], 2, ',', '.');?></span>
+<div class="main-content p-2 left-250">
+    <div class="content">
+        <div class="d-flex align-items-center shadow-lg main-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
+                <path d="M14 9h8v6h-8z"></path>
+                <path d="M20 3H5C3.346 3 2 4.346 2 6v12c0 1.654 1.346 3 3 3h15c1.103 0 2-.897 2-2v-2h-8c-1.103 0-2-.897-2-2V9c0-1.103.897-2 2-2h8V5c0-1.103-.897-2-2-2z"></path>
+            </svg>
+            <span class="text-orange px-1">Lançamentos</h3>
+        </div>
+    
+        <!-- Lançamentos -->
+    
+        <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
+            <div class="card shadow d-flex credit-card">
+                <div class="card-body d-flex justify-content-around align-items-center text-light bg-success">
+                    <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                        <span>Receitas</span>
+                        <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($receitas['valor'], 2, ',', '.');?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow d-flex credit-card">
+                <div class="card-body d-flex justify-content-around align-items-center text-light bg-danger">
+                    <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                        <span>Despesas</span>
+                        <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($despesas['valor'], 2, ',', '.');?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow d-flex credit-card">
+                <div class="card-body d-flex justify-content-around align-items-center text-light bg-info">
+                    <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
+                        <span>Saldo</span>
+                        <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($saldo, 2, ',', '.');?></span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card shadow d-flex credit-card">
-            <div class="card-body d-flex justify-content-around align-items-center text-light bg-danger">
-                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
-                    <span>Despesas</span>
-                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($despesas['valor'], 2, ',', '.');?></span>
-                </div>
-            </div>
+    
+        <div class="mt-5 p-3">
+            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
         </div>
-        <div class="card shadow d-flex credit-card">
-            <div class="card-body d-flex justify-content-around align-items-center text-light bg-info">
-                <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">
-                    <span>Saldo</span>
-                    <span class="fs-5 fw-bolder mt-3">R$ <?php echo number_format($saldo, 2, ',', '.');?></span>
-                </div>
-            </div>
+      
+        <div class="p-3" style="width:450px">
+            <?php
+                session_start();
+                if(isset($_SESSION['msg'])){
+                    echo $_SESSION['msg'];
+                    unset($_SESSION['msg']);
+                }
+            ?>
         </div>
-    </div>
-
-    <div class="mt-5 p-3">
-        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#lancamentoModal">Novo Lançamento</button>
-    </div>
-  
-    <div class="p-3" style="width:450px">
-        <?php
-            session_start();
-            if(isset($_SESSION['msg'])){
-                echo $_SESSION['msg'];
-                unset($_SESSION['msg']);
-            }
-        ?>
-    </div>
-
-    <div class="p-3">
-        <?php 
-            $msg = "";
-        ?>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Conta</th>
-                    <th scope="col">Data Lançamento</th>
-                    <th scope="col">Data Vencimento</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Parcela</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                <?php foreach ($lancamentos as $result) : ?>
-                    <?php extract($result); ?>
+    
+        <div class="p-3">
+            <?php 
+                $msg = "";
+            ?>
+    
+            <table class="table">
+                <thead>
                     <tr>
-                        <td scope='row'><?php echo $id; ?></td>
-                        <td scope='row'><?php echo $tipo; ?></td>
-                        <td scope='row'><?php echo $conta; ?></td>
-                        <td scope='row'><?php echo date("d/m/Y", strtotime($data_lancamento)); ?></td>
-                        <td scope='row'><?php echo date("d/m/Y", strtotime($data_vencimento)); ?></td>
-                        <td scope='row'><?php echo $valor; ?></td>
-                        <td scope='row'><?php echo $descricao; ?></td>
-                        <td scope='row'><?php echo $categoria; ?></td>
-                        <td scope='row'><?php echo $parcelas; ?></td>
-                        <td>
-                            <button type='button' class='btn btn-primary'>Editar</button>
-                            <button type='button' class='btn btn-danger'>Excluir</button>
-                        </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Conta</th>
+                        <th scope="col">Data Lançamento</th>
+                        <th scope="col">Data Vencimento</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Parcela</th>
+                        <th scope="col">Ações</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="table-group-divider">
+                    <?php foreach ($lancamentos as $result) : ?>
+                        <?php extract($result); ?>
+                        <tr>
+                            <td scope='row'><?php echo $id; ?></td>
+                            <td scope='row'><?php echo $tipo; ?></td>
+                            <td scope='row'><?php echo $conta; ?></td>
+                            <td scope='row'><?php echo date("d/m/Y", strtotime($data_lancamento)); ?></td>
+                            <td scope='row'><?php echo date("d/m/Y", strtotime($data_vencimento)); ?></td>
+                            <td scope='row'><?php echo $valor; ?></td>
+                            <td scope='row'><?php echo $descricao; ?></td>
+                            <td scope='row'><?php echo $categoria; ?></td>
+                            <td scope='row'><?php echo $parcelas; ?></td>
+                            <td>
+                                <button type='button' class='btn btn-primary'>Editar</button>
+                                <button type='button' class='btn btn-danger'>Excluir</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -165,8 +167,8 @@
                 ?>
                 <?php
                     //BUSCAR O TIPO NO BANCO DE DADOS
-                    $tipos = "SELECT * FROM tipos";
-                    $resultTipos = mysqli_query($conn, $tipos);
+                    $tipoLancamento = "SELECT * FROM tipos";
+                    $resultTipos = mysqli_query($conn, $tipoLancamento);
                     if(($resultTipos) and ($resultTipos->num_rows != 0)) {
                 ?>
 
@@ -181,17 +183,8 @@
                             <?php endforeach; ?>
                             <?php }?>
                         </select>
-                    </div>
+                    </div>                    
                     
-                    <div class="col-md-3">
-                        <label for="conta" class="form-label">Cartão</label>
-                        <select id="conta" class="form-select" name="conta">
-                            <option selected value="0">Selecione o cartão...</option>
-                            <option value="Banco do Brasil">Banco do Brasil</option>
-                            <option value="Nubank">Nubank</option>
-                            <option value="Porto Seguro">Porto Seguro</option>
-                        </select>
-                    </div>
                     <div class="col-md-2">
                         <label for="data_lancamento" class="form-label">Data da compra</label>
                         <input type="date" class="form-control" id="data_lancamento" name="data_lancamento">
