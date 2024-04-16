@@ -187,7 +187,17 @@
                             <?php endforeach; ?>
                             <?php }?>
                         </select>
-                    </div>                    
+                    </div>  
+
+                    <div class="col-md-3">
+                        <label for="conta" class="form-label">Conta</label>
+                        <select id="conta" class="form-select" name="conta">
+                            <option selected>Selecione a conta...</option>
+                            <option value="Banco do Brasil">Banco do Brasil</option>
+                            <option value="Nubank">Nubank</option>
+                            <option value="Porto Seguro">Porto Seguro</option>
+                        </select>
+                    </div>                  
                     
                     <div class="col-md-2">
                         <label for="data_lancamento" class="form-label">Data da compra</label>
