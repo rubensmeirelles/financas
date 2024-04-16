@@ -20,8 +20,8 @@
     $lancamentos = buscarLancamentos($conn, $table, $where, $order);
     
 ?>
-<div class="main-content p-2 left-250">
-    <div class="content">
+<div class="content p-2 left-250">
+    <div class="content-main">
         <div class="d-flex align-items-center shadow-lg main-header">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(255, 255, 255, 1);">
                 <path d="M14 9h8v6h-8z"></path>
@@ -82,7 +82,7 @@
                 $msg = "";
             ?>
     
-            <table id="example" class="display table">
+            <table id="tabelaLancamentos" class="display table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
