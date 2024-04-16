@@ -82,7 +82,7 @@
                 $msg = "";
             ?>
     
-            <table id="tabelaLancamentos" class="display table">
+            <table id="tabelaLancamentos" class="display table table-dark table-striped table-hover text-white">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -106,7 +106,7 @@
                             <td scope='row'><?php echo $conta; ?></td>
                             <td scope='row'><?php echo date("d/m/Y", strtotime($data_lancamento)); ?></td>
                             <td scope='row'><?php echo date("d/m/Y", strtotime($data_vencimento)); ?></td>
-                            <td scope='row'><?php echo $valor; ?></td>
+                            <td scope='row'>R$ <?php echo number_format($valor, 2, ',', '.'); ?></td>
                             <td scope='row'><?php echo $descricao; ?></td>
                             <td scope='row'><?php echo $categoria; ?></td>
                             <td scope='row'><?php echo $parcelas; ?></td>
