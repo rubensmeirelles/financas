@@ -16,7 +16,7 @@ $saldo = calcularSaldo($conn, 'lancamentos', 'Receita', 'Despesa');
 //TOTAL DE LANÇAMENTOS
 $table = 'lancamentos';
 $where = 1;
-$order = "data_lancamento DESC";
+$order = "id DESC";
 $lancamentos = buscarLancamentos($conn, $table, $where, $order);
 
 ?>
@@ -118,6 +118,7 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <!-- <?php echo "<li>$parcelamento</li>";?> -->
         </div>
     </div>
 </div>
@@ -137,7 +138,6 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
 
                 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 if (!empty($data['salvarLancamento'])) {
-                    var_dump($data);
                     // EVITAR SQL INJECTION
                     $tipo = mysqli_real_escape_string($conn, $data['tipo']);
                     $conta = mysqli_real_escape_string($conn, $data['conta']);
@@ -149,9 +149,25 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                     $opcao_lancamento = mysqli_real_escape_string($conn, $data['opcao_lancamento']);
                     $parcelas = mysqli_real_escape_string($conn, $data['parcelas']);
 
-                    $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$descricao', '$categoria', '$opcao_lancamento', '$parcelas')";
+                    if($parcelas > 1){
+                        for ($i = 1; $i <= $parcelas; $i++){
+                            $parcelamento = $i .'/'. $parcelas;
+                            $data_vencimento_ano = $data_vencimento('Y');
+                            $data_vencimento_mes = $data_vencimento('m');
+                            $data_vencimento_dia = $data_vencimento('d');
+                            $data_vencimento_parcela = ($data_vencimento_ano .'-'. $data_vencimento_mes+$parcelas .'-'. $data_vencimento_dia);
+                            $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento_parcela', $valor/$parcelas, '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
+                            mysqli_query($conn, $queryLancamento);
+                        }
+                    } else {
+                        // Se for apenas uma parcela, insere normalmente
+                        $parcelamento = '1/1';
+                        $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
+                        mysqli_query($conn, $queryLancamento);
+                    }
 
-                    mysqli_query($conn, $queryLancamento);
+                    // $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento', '$valor', '$descricao', '$categoria', '$opcao_lancamento', '$parcelas')";
+
 
                     if (mysqli_insert_id($conn)) {
                         $_SESSION['msg'] = "<div class='alert alert-success d-flex align-items-center alert-dismissible fade show' role='alert'>
