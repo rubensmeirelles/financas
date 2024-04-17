@@ -15,12 +15,24 @@ menu.addEventListener('click', function (){
     }
 });
 
-let checkbox = document.querySelector('#gridCheck');
+let radioButtonCredito = document.querySelector('#gridCheck');
+let radioButtonDebito = document.querySelector('#debito');
 let qtdParcelas = document.querySelector('.parcelas');
 
-checkbox.addEventListener('click', function() {
-    qtdParcelas.classList.toggle('hidden')
-})
+radioButtonCredito.addEventListener('change', function() {
+    if (this.checked)  {
+        qtdParcelas.classList.remove('hidden');
+    }
+});
+
+radioButtonDebito.addEventListener('change', function() {
+    if (this.checked) {
+        qtdParcelas.classList.add('hidden');
+        document.getElementById('parcelas').value = ''; // Limpa o valor do input
+    }
+});
+
+
 
 // new DataTable('#example');
 var table = new DataTable('#tabelaLancamentos', {
