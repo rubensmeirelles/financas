@@ -36,19 +36,19 @@
             // extract($totalDespesas);
     
             //DESPESAS CARTÃO BB
-            $listarDespesasBB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Banco do Brasil' LIMIT 1";
+            $listarDespesasBB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Banco do Brasil' AND opcao_lancamento = 'C' LIMIT 1";
             $resultListarDespesas = mysqli_query($conn, $listarDespesasBB);
             $totalDespesasBB = mysqli_fetch_assoc($resultListarDespesas);
             extract($totalDespesasBB);
     
             //DESPESAS CARTÃO NUBANK
-            $listarDespesasNB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Nubank' LIMIT 1";
+            $listarDespesasNB = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Nubank' AND opcao_lancamento = 'C' LIMIT 1";
             $resultListarDespesas = mysqli_query($conn, $listarDespesasNB);
             $totalDespesasNB = mysqli_fetch_assoc($resultListarDespesas);
             extract($totalDespesasNB);
     
             //DESPESAS CARTÃO PORTO
-            $listarDespesasPS = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Porto Seguro' LIMIT 1";
+            $listarDespesasPS = "SELECT SUM(valor) AS valor FROM lancamentos WHERE tipo = 'Despesa' AND conta = 'Porto Seguro' AND opcao_lancamento = 'C' LIMIT 1";
             $resultListarDespesas = mysqli_query($conn, $listarDespesasPS);
             $totalDespesasPS = mysqli_fetch_assoc($resultListarDespesas);
             extract($totalDespesasPS);
@@ -61,7 +61,7 @@
             <div>
                 <table class="table table-dark border" style="width: 500px">
                     <thead>
-                        <tr><span class="fw-bold">Resumo das despesas e receitas</span></tr>                
+                        <tr><span class="fw-bold">Resumo Geral (Despesas e Receitas)</span></tr>                
                     </thead>
                     <tr>
                         <td class="text-success">Receitas</td>
@@ -84,8 +84,10 @@
             </div>
             <hr>
         </div>
+        <hr>
+        <span class="fw-bold p-2">Gastos com cartão de crédito</span>
     
-        <div class="d-flex justify-content-around align-items-center mt-2 dashboard">
+        <div class="d-flex justify-content-around align-items-center mt-2">
             <div class="card shadow d-flex credit-card">
                 <div class="card-body d-flex justify-content-around align-items-center text-black bb">
                     <div class="d-flex justify-content-center align-items-center flex-column p-2 icon-card">

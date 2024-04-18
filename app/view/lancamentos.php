@@ -177,8 +177,7 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                             // Monta e executa a query SQL para inserir o lançamento
                             $parcelamento = "$i/$parcelas";
                             $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento_formatada', $valor_final_parcela, '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
-                            mysqli_query($conn, $queryLancamento);
-                            
+                            mysqli_query($conn, $queryLancamento);                          
                         
                         $controle++;
                         }
