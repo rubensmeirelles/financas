@@ -149,32 +149,40 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                     $parcelas = mysqli_real_escape_string($conn, $data['parcelas']);
 
                     $valor_parcela = $valor / $parcelas;
-                    $valor_ultima_parcela = $valor - ($valor_parcela * ($parcelas - 1));
+                    $valor_final_parcela = "";
 
                     $data_vencimento = new DateTime($data_lancamento); // Inicializa a data de vencimento com a data de lançamento
-                    $controle = 0;
+                    $controle = 1;
+                    $soma_valor_parcela = 0;
 
-                    for ($i = 1; $i <= $parcelas; $i++) {
-                        // Adiciona 1 mês à data de vencimento
-                        $data_vencimento->add(new DateInterval("P1M"));
+                    while($controle <= $parcelas){
 
+                        for ($i = 1; $i <= $parcelas; $i++) {
+                            // Adiciona 1 mês à data de vencimento
+                            $data_vencimento->add(new DateInterval("P1M"));
+
+                            // $controle++;
+                            if ($controle == $parcelas) {
+                                $valor_ultima_parcela = $valor - $soma_valor_parcela; 
+                                $soma_valor_parcela += number_format($valor_ultima_parcela, 2, '.', '');  
+                                $valor_final_parcela = $valor_ultima_parcela;
+                            } else {
+                                $soma_valor_parcela += number_format($valor_parcela, 2, '.', '');
+                                $valor_final_parcela = $valor_parcela;
+                            }
+                            
+                            // Formata a data de vencimento para o formato adequado
+                            $data_vencimento_formatada = $data_vencimento->format('Y-m-d');
+
+                            // Monta e executa a query SQL para inserir o lançamento
+                            $parcelamento = "$i/$parcelas";
+                            $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento_formatada', $valor_final_parcela, '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
+                            mysqli_query($conn, $queryLancamento);
+                            
+                        
                         $controle++;
-                        if ($controle == $parcelas) {
-                            $valor_final_parcela = $valor_ultima_parcela;
-                        } else {
-                            $valor_final_parcela = $valor_parcela;
                         }
-
-                        // Formata a data de vencimento para o formato adequado
-                        $data_vencimento_formatada = $data_vencimento->format('Y-m-d');
-
-                        // Monta e executa a query SQL para inserir o lançamento
-                        $parcelamento = "$i/$parcelas";
-                        $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento_formatada', $valor_final_parcela, '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
-                        mysqli_query($conn, $queryLancamento);
                     }
-
-
 
                     if (mysqli_insert_id($conn)) {
                         $_SESSION['msg'] = "<div class='alert alert-success d-flex align-items-center alert-dismissible fade show' role='alert'>
