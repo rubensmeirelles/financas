@@ -112,18 +112,17 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                             <td scope='row'><?php echo $parcelas; ?></td>
                             <td>
                                 <button type='button' class='btn btn-primary'>Editar</button>
-                                <button type='button' class='btn btn-danger'>Excluir</button>
+                                <button type='button' class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- <?php echo "<li>$parcelamento</li>"; ?> -->
         </div>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Lançamento-->
 <div class="modal fade" id="lancamentoModal" tabindex="-1" aria-labelledby="lancamentoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -293,6 +292,38 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                             </div>
                         </div>
                     </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Confirmação exclusão lançamento-->
+<div class="modal fade" id="exclusaoLancamentoModal" tabindex="-1" aria-labelledby="exclusaoLancamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exclusaoLancamentoModalLabel">Excluir lançamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">               
+                <form class="row g-3" method="POST" action="">
+                    <div class="col-md-3">
+                        <?php 
+                            if(isset($_POST['confirmarExclusao']) && isset($_GET['id'])){
+                                $id = $_GET['id'];
+                                echo "<h3></h3>Confirma a exclusão do lançamento ". $_GET[$id] ."?";
+                            }
+                        ?>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <input type="submit" class="btn btn-primary" name="salvarLancamento" value="Confirmar">
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

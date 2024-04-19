@@ -36,5 +36,12 @@ function calcularSaldo($conn, $table, $tipoReceita, $tipoDespesa) {
     return $saldo;
 }
 
+function deletar($conn, $table, $id){
+    if (!empty($id)) {
+        $query = "DELETE FROM $table WHERE id =". (int) $id;
+        $execute = mysqli_query($conn, $query);
+    }
+}
+
 
 
