@@ -47,4 +47,32 @@ var table = new DataTable('#tabelaLancamentos', {
 
 table.destroy();
 
+//RECUPERAR ID PARA EXCLUIR
+
+const deleteModal = new bootstrap.Modal(document.getElementById("exclusaoLancamentoModal"));
+
+async function excluirLancamento(id) {
+    // const dados = await fetch('lancamentos.php?id=' + id);
+    // const resposta = await dados.json();
+    // deleteModal.show();
+    document.getElementById('modalLancamentoId').textContent = id;
+    console.log(id);
+}
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var modal = document.getElementById('exclusaoLancamentoModal');
+    //     modal.addEventListener('show.bs.modal', function(event) {
+    //         var button = event.relatedTarget; // Botão que acionou o modal
+    //         var idLancamento = button.getAttribute('data-id'); // Pega o ID do botão
+    //         document.getElementById('modalLancamentoId').textContent = idLancamento; // Exibe o ID no modal
+    //     });
+    // });
+
+
+
+
+
+
+
 
