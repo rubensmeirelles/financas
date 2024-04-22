@@ -38,8 +38,7 @@ radioButtonDebito.addEventListener('change', function() {
 var table = new DataTable('#tabelaLancamentos', {
     retrieve: true,
     language: {
-        url: '../js/translate.json',
-        // url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
+        url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
     },
     order: [[ 3, "desc" ]],
     lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],

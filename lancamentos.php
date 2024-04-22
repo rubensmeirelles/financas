@@ -1,5 +1,8 @@
 <?php
-require_once '../financas/app/functions/functions.php';
+include_once '../financas2/includes/header.php';
+include_once '../financas2/config/config.php';
+include_once '../financas2/config/connection.php';
+require_once '../financas2/functions/functions.php';
 //TOTAL DE RECEITAS
 $table = 'lancamentos';
 $tipo = "Receita";
@@ -113,7 +116,12 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                             <td scope='row'><?php echo $result['parcelas']; ?></td>
                             <td>
                                 <button type='button' class='btn btn-primary'>Editar</button>
+<<<<<<< HEAD:app/view/lancamentos.php
                                 <button type='button' class='btn btn-danger btnExcluir' id="<?php echo $result['id'];?>" onclick="excluirLancamento(<?php echo $result['id'];?>)" data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
+=======
+                                <button type='button' class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
+                                <a href="deleteLancamento.php?id=<?php echo $id?>">Apagar</a><br>
+>>>>>>> b41622a1a664978871fbac9dbd47e59ab5b7474f:lancamentos.php
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -189,14 +197,12 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                             Cadastro realizado com sucesso!
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>";
-                        $url_redirect = URL . "/lancamentos";
                         header("Location: $url_redirect");
                     } else {
                         $_SESSION['msg'] = "<div class='alert alert-danger d-flex align-items-center alert-dismissible fade show' role='alert'>
                             Erro ao cadastrar :(
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>";
-                        $url_redirect = URL . "/lancamentos";
                         header("Location: $url_redirect");
                     }
                 }
@@ -323,3 +329,9 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
         </div>
     </div>
 </div>
+<<<<<<< HEAD:app/view/lancamentos.php
+=======
+
+<?php
+include_once '../financas2/includes/footer.php';
+>>>>>>> b41622a1a664978871fbac9dbd47e59ab5b7474f:lancamentos.php
