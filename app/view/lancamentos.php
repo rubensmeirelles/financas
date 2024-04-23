@@ -309,7 +309,7 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">               
-                <form class="row g-3" method="POST" action="">
+                <form class="row g-3" id="formDeleteLancamento" method="POST" action="<?php echo 'deleteLancamento.php/id='.$result['id']?>">
                     <div class="col-md-3">
                     ID: <span id="modalLancamentoId"></span>
                     <input type="text" name="id" id="modalLancamentoId">
@@ -317,7 +317,7 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <input type="submit" class="btn btn-primary" name="salvarLancamento" value="Confirmar" onclick="deleteLancamento(<?php echo $result['id'];?>)">
+                            <input type="submit" class="btn btn-primary" name="deleteLancamento" value="Confirmar">
                         </div>
                     </div>
                 </form>

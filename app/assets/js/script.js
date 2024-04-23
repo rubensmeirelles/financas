@@ -55,13 +55,26 @@ async function excluirLancamento(id) {
     const dados = await fetch('lancamentos.php?id=' + id);
     // const resposta = await dados.json();
     // deleteModal.show();
-    document.getElementById('modalLancamentoId').value = ['dados'].url;
-    console.log(dados);
+    document.getElementById('modalLancamentoId').textContent = id;
+    console.log(id);
 }
 
+// const formDeleteLancamento = document.getElementById("formDeleteLancamento");
+// if(formDeleteLancamento) {
+//     formDeleteLancamento.addEventListener("submit", async(e) => {
+//         e.preventDefault();
+//         const idForm = new FormData(formDeleteLancamento);
+
+//         const idLancamento = await fetch("deleteLancamento.php", {
+//             method: "POST",
+//             body: idForm
+//         })
+//     })
+// }
+
 function deleteLancamento(id){
-    document.getElementById('modalLancamentoId').value;
-    console.log(id);
+    document.getElementById('modalLancamentoId').textContent.value;
+    alert("Id modal: ",id);
 }
 
 

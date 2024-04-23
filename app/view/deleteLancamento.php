@@ -1,4 +1,10 @@
 <?php
-    if(isset($_GET['id'])){
-        echo "<h3></h3>Confirma a exclusão do lançamento ". $_GET[$id] ."?";
-    }
+include_once '../config/config.php';
+include_once '../config/connection.php';
+
+$id = filter_input(INPUT_POST, FILTER_DEFAULT);
+
+if (!empty($id)) {
+    $query = "DELETE FROM lancamentos WHERE id =". $id;
+    mysqli_query($conn, $query);
+}
