@@ -113,10 +113,8 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                             <td scope='row'><?php echo $result['parcelas']; ?></td>
                             <td>
                                 <button type='button' class='btn btn-primary'>Editar</button>
-<<<<<<< HEAD:app/view/lancamentos.php
+
                                 <button type='button' class='btn btn-danger btnExcluir' id="<?php echo $result['id'];?>" onclick="excluirLancamento(<?php echo $result['id'];?>)" data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
-=======
-                                <button type='button' class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -314,11 +312,12 @@ $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
                 <form class="row g-3" method="POST" action="">
                     <div class="col-md-3">
                     ID: <span id="modalLancamentoId"></span>
+                    <input type="text" name="id" id="modalLancamentoId">
                     </div>
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <input type="submit" class="btn btn-primary" name="salvarLancamento" value="Confirmar">
+                            <input type="submit" class="btn btn-primary" name="salvarLancamento" value="Confirmar" onclick="deleteLancamento(<?php echo $result['id'];?>)">
                         </div>
                     </div>
                 </form>

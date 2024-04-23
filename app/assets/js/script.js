@@ -52,10 +52,15 @@ table.destroy();
 const deleteModal = new bootstrap.Modal(document.getElementById("exclusaoLancamentoModal"));
 
 async function excluirLancamento(id) {
-    // const dados = await fetch('lancamentos.php?id=' + id);
+    const dados = await fetch('lancamentos.php?id=' + id);
     // const resposta = await dados.json();
     // deleteModal.show();
-    document.getElementById('modalLancamentoId').textContent = id;
+    document.getElementById('modalLancamentoId').value = ['dados'].url;
+    console.log(dados);
+}
+
+function deleteLancamento(id){
+    document.getElementById('modalLancamentoId').value;
     console.log(id);
 }
 
