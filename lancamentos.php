@@ -22,6 +22,8 @@ $where = 1;
 $order = "id DESC";
 $lancamentos = buscarLancamentos($conn, $table, $where, $order);
 
+$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+
 ?>
 <div class="content p-2 left-250">
     <div class="content-main">
@@ -102,24 +104,28 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                 </thead>
                 <tbody class="table-group-divider">
                     <?php foreach ($lancamentos as $result) : ?>
-                        <?php extract($result); ?>
                         <tr>
-                            <td scope='row'><?php echo $id; ?></td>
-                            <td scope='row'><?php echo $tipo; ?></td>
-                            <td scope='row'><?php echo $conta; ?></td>
-                            <td scope='row'><?php echo date("d/m/Y", strtotime($data_lancamento)); ?></td>
-                            <td scope='row'><?php echo date("d/m/Y", strtotime($data_vencimento)); ?></td>
-                            <td scope='row'>R$ <?php echo number_format($valor, 2, ',', '.'); ?></td>
-                            <td scope='row'><?php echo $descricao; ?></td>
-                            <td scope='row'><?php echo $categoria; ?></td>
-                            <td scope='row'><?php echo $parcelas; ?></td>
+                            <td scope='row'><?php echo $result['id']; ?></td>
+                            <td scope='row'><?php echo $result['tipo']; ?></td>
+                            <td scope='row'><?php echo $result['conta']; ?></td>
+                            <td scope='row'><?php echo date("d/m/Y", strtotime($result['data_lancamento'])); ?></td>
+                            <td scope='row'><?php echo date("d/m/Y", strtotime($result['data_vencimento'])); ?></td>
+                            <td scope='row'>R$ <?php echo number_format($result['valor'], 2, ',', '.'); ?></td>
+                            <td scope='row'><?php echo $result['descricao']; ?></td>
+                            <td scope='row'><?php echo $result['categoria']; ?></td>
+                            <td scope='row'><?php echo $result['parcelas']; ?></td>
                             <td>
                                 <button type='button' class='btn btn-primary'>Editar</button>
+<<<<<<< HEAD:app/view/lancamentos.php
+                                <button type='button' class='btn btn-danger btnExcluir' id="<?php echo $result['id'];?>" onclick="excluirLancamento(<?php echo $result['id'];?>)" data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
+=======
                                 <button type='button' class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#exclusaoLancamentoModal">Excluir</button>
                                 <a href="deleteLancamento.php?id=<?php echo $id?>">Apagar</a><br>
+>>>>>>> b41622a1a664978871fbac9dbd47e59ab5b7474f:lancamentos.php
                             </td>
                         </tr>
                     <?php endforeach; ?>
+
                 </tbody>
             </table>
         </div>
@@ -158,7 +164,7 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
                     $controle = 1;
                     $soma_valor_parcela = 0;
 
-                    while($controle <= $parcelas){
+                    while ($controle <= $parcelas) {
 
                         for ($i = 1; $i <= $parcelas; $i++) {
                             // Adiciona 1 mês à data de vencimento
@@ -166,23 +172,23 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
 
                             // $controle++;
                             if ($controle == $parcelas) {
-                                $valor_ultima_parcela = $valor - $soma_valor_parcela; 
-                                $soma_valor_parcela += number_format($valor_ultima_parcela, 2, '.', '');  
+                                $valor_ultima_parcela = $valor - $soma_valor_parcela;
+                                $soma_valor_parcela += number_format($valor_ultima_parcela, 2, '.', '');
                                 $valor_final_parcela = $valor_ultima_parcela;
                             } else {
                                 $soma_valor_parcela += number_format($valor_parcela, 2, '.', '');
                                 $valor_final_parcela = $valor_parcela;
                             }
-                            
+
                             // Formata a data de vencimento para o formato adequado
                             $data_vencimento_formatada = $data_vencimento->format('Y-m-d');
 
                             // Monta e executa a query SQL para inserir o lançamento
                             $parcelamento = "$i/$parcelas";
                             $queryLancamento = "INSERT INTO lancamentos (tipo, conta, data_lancamento, data_vencimento, valor, descricao, categoria, opcao_lancamento, parcelas) VALUES ('$tipo', '$conta', '$data_lancamento', '$data_vencimento_formatada', $valor_final_parcela, '$descricao', '$categoria', '$opcao_lancamento', '$parcelamento')";
-                            mysqli_query($conn, $queryLancamento);                          
-                        
-                        $controle++;
+                            mysqli_query($conn, $queryLancamento);
+
+                            $controle++;
                         }
                     }
 
@@ -310,15 +316,8 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
             <div class="modal-body">               
                 <form class="row g-3" method="POST" action="">
                     <div class="col-md-3">
-                        <?php 
-                            if(isset($_POST['confirmarExclusao']) && isset($_GET['id'])){
-                                $id = $_GET['id'];
-                                echo "<h3></h3>Confirma a exclusão do lançamento ". $_GET[$id] ."?";
-                            }
-                        ?>
+                    ID: <span id="modalLancamentoId"></span>
                     </div>
-
-
                     <div class="col-12">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -330,6 +329,9 @@ $lancamentos = buscarLancamentos($conn, $table, $where, $order);
         </div>
     </div>
 </div>
+<<<<<<< HEAD:app/view/lancamentos.php
+=======
 
 <?php
 include_once '../financas2/includes/footer.php';
+>>>>>>> b41622a1a664978871fbac9dbd47e59ab5b7474f:lancamentos.php
