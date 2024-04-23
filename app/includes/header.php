@@ -2,10 +2,10 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="assets/images/icon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="app/assets/images/icon/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="app/assets/css/style.css">
+    <link rel="stylesheet" href="app/assets/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="DataTables/datatables.min.css" rel="stylesheet">
  
     <script src="DataTables/datatables.min.js"></script>
@@ -16,13 +16,13 @@
 
     <aside class="sidebar position-absolute d-flex flex-column top-0 text-white width-240">
         <div class="d-flex justify-content-center align-items-center p-2 user-data" id="user-data">
-            <img src="assets/images/avatar.png" alt="user">
+            <img src="app/assets/images/avatar.png" alt="user">
             <span class="mx-2">Rubens Meirelles</span>
         </div>
         <div class="divider"></div>
         <div class="mt-2">
             <ul class="menu-item p-2">
-                <a href="index" class="text-decoration-none menu-list active">
+                <a href="home" class="text-decoration-none menu-list active">
                     <li class="text-black fw-bolder"><i class="fas fa-tachometer-alt fa-rotate-by fa-lg mx-2 icon-color" style="--fa-rotate-angle: 91deg;"></i><span class="item-menu">Dashboard</span></li>
                 </a>   
                 <a href="lancamentos" class="text-decoration-none menu-list">

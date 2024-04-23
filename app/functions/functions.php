@@ -1,5 +1,5 @@
 <?php 
-include_once "../financas2/config/config.php";
+include_once "../financas/app/config/config.php";
 
 function buscarLancamentos($conn, $table, $where = "", $order = ""){
     if (!empty($order)) {

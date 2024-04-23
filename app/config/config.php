@@ -9,10 +9,10 @@ date_default_timezone_set('America/Sao_Paulo');
 
 //CONSTANTES GLOBAIS
 //CONSTANTES COM O ENDEREÇO DA APLICAÇÃO
-// define("URL", "http://localhost/financas");
+define("URL", "http://localhost/financas");
 
 //CONSTANTES COM O ENDEREÇO DA APLICAÇÃO MÓDULO ADMIN
-// define("URLADMIN", "http://localhost/financas/admin");
+define("URLADMIN", "http://localhost/financas/admin");
 
 //CONSTANTE COM O E-MAIL DO ADMINISTRADOR DA APLICAÇÃO
 define("EMAIL", "rrubens.meirelles@gmail.com.br");
